@@ -1,11 +1,15 @@
 ﻿using EF_HW1.DLL.Modules;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Drawing;
 
 namespace EF_HW1.DLL { 
     public class Context : DbContext 
     {
-        public DbSet<SpanishFootball> Footballs { get; set; }
+        public DbSet<Team> Team { get; set; }
+        public DbSet<Player> Player { get; set; }
+        public DbSet<Game> Game { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,6 +22,21 @@ namespace EF_HW1.DLL {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             optionsBuilder.UseSqlServer(connectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Game>()
+                .HasOne<Team>(f => f.Team1)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Game>()
+                .HasOne<Team>(f => f.Team2)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -4,6 +4,7 @@ using EF_HW1.DLL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_HW1.DLL.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240302124429_UpdateGames")]
+    partial class UpdateGames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +55,29 @@ namespace EF_HW1.DLL.Migrations
                     b.HasIndex("Team2ID");
 
                     b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("EF_HW1.DLL.Modules.GameGoalPlayer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("GameID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlayerID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("GameID");
+
+                    b.HasIndex("PlayerID");
+
+                    b.ToTable("GameGoalPlayer");
                 });
 
             modelBuilder.Entity("EF_HW1.DLL.Modules.Player", b =>
@@ -119,21 +145,6 @@ namespace EF_HW1.DLL.Migrations
                     b.ToTable("Team");
                 });
 
-            modelBuilder.Entity("GamePlayer", b =>
-                {
-                    b.Property<int>("GameScoredID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlayerGoalInfoID")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameScoredID", "PlayerGoalInfoID");
-
-                    b.HasIndex("PlayerGoalInfoID");
-
-                    b.ToTable("GamePlayer");
-                });
-
             modelBuilder.Entity("EF_HW1.DLL.Modules.Game", b =>
                 {
                     b.HasOne("EF_HW1.DLL.Modules.Team", "Team1")
@@ -153,6 +164,25 @@ namespace EF_HW1.DLL.Migrations
                     b.Navigation("Team2");
                 });
 
+            modelBuilder.Entity("EF_HW1.DLL.Modules.GameGoalPlayer", b =>
+                {
+                    b.HasOne("EF_HW1.DLL.Modules.Game", "Game")
+                        .WithMany("GoalPlayerInfo")
+                        .HasForeignKey("GameID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EF_HW1.DLL.Modules.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Player");
+                });
+
             modelBuilder.Entity("EF_HW1.DLL.Modules.Player", b =>
                 {
                     b.HasOne("EF_HW1.DLL.Modules.Team", "Team")
@@ -164,19 +194,9 @@ namespace EF_HW1.DLL.Migrations
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("GamePlayer", b =>
+            modelBuilder.Entity("EF_HW1.DLL.Modules.Game", b =>
                 {
-                    b.HasOne("EF_HW1.DLL.Modules.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GameScoredID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EF_HW1.DLL.Modules.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayerGoalInfoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("GoalPlayerInfo");
                 });
 
             modelBuilder.Entity("EF_HW1.DLL.Modules.Team", b =>

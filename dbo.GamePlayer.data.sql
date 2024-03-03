@@ -1,0 +1,7 @@
+﻿INSERT INTO [dbo].[GamePlayer] ([GameScoredID], [PlayerGoalInfoID]) VALUES (1, 1)
+INSERT INTO [dbo].[GamePlayer] ([GameScoredID], [PlayerGoalInfoID]) VALUES (2, 1)
+INSERT INTO [dbo].[GamePlayer] ([GameScoredID], [PlayerGoalInfoID]) VALUES (1, 2)
+INSERT INTO [dbo].[GamePlayer] ([GameScoredID], [PlayerGoalInfoID]) VALUES (2, 2)
+INSERT INTO [dbo].[GamePlayer] ([GameScoredID], [PlayerGoalInfoID]) VALUES (1, 3)
+INSERT INTO [dbo].[GamePlayer] ([GameScoredID], [PlayerGoalInfoID]) VALUES (2, 3)
+INSERT INTO [dbo].[GamePlayer] ([GameScoredID], [PlayerGoalInfoID]) VALUES (2, 4)

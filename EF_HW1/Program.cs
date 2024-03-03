@@ -508,6 +508,8 @@ namespace EF_HW1
                     Console.WriteLine("Invalid input");
                     return;
                 }
+                context.Team.Attach(newGame.Team1);
+                context.Team.Attach(newGame.Team2);
                 context.Game.Add(newGame);
                 context.SaveChanges();
 

@@ -16,7 +16,7 @@ namespace EF_HW1.DLL.Modules
         public int GoalsTeam1 { get; set; }
         public int GoalsTeam2 { get; set; }
 
-        public List<Player> PlayerGoalInfo {  get; set; }
+        public List<PlayerGame> PlayerGames {  get; set; }
         public DateTime Date { get; set; }
     }
 }

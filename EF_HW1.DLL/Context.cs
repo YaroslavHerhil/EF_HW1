@@ -10,6 +10,7 @@ namespace EF_HW1.DLL {
         public DbSet<Team> Team { get; set; }
         public DbSet<Player> Player { get; set; }
         public DbSet<Game> Game { get; set; }
+        public DbSet<PlayerGame> PlayerGame { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,6 +38,23 @@ namespace EF_HW1.DLL {
                 .HasOne<Team>(f => f.Team2)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+
+            modelBuilder.Entity<PlayerGame>()
+                .HasKey(pg => new { pg.PlayerID, pg.GameID });
+
+
+            modelBuilder.Entity<PlayerGame>()
+                .HasOne(pg => pg.Player)
+                .WithMany(pg => pg.PlayerGames)
+                .HasForeignKey(pg => pg.PlayerID);
+
+
+            modelBuilder.Entity<PlayerGame>()
+                    .HasOne(pg => pg.Game)
+                    .WithMany(pg => pg.PlayerGames)
+                    .HasForeignKey(pg => pg.GameID);
         }
     }
 }

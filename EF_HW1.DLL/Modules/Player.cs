@@ -15,6 +15,6 @@ namespace EF_HW1.DLL.Modules
 
         public Team Team { get; set; }
 
-        public List<Game> GameScored { get; set; }
+        public List<PlayerGame> PlayerGames { get; set; }
     }
 }
